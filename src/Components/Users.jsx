@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router";
 
 const Users = () => {
     const [users, setUsers] = useState([]);
@@ -55,9 +56,11 @@ const Users = () => {
             .then((data) => {
                 console.log(data);
                 if (data.deletedCount) {
-                    alert("User deleted successfully")
-                    const newUsers = users.filter(user => user._id !== userId)
-                    setUsers(newUsers)
+                    alert("User deleted successfully");
+                    const newUsers = users.filter(
+                        (user) => user._id !== userId,
+                    );
+                    setUsers(newUsers);
                 }
             });
     };
@@ -80,7 +83,8 @@ const Users = () => {
                         {user.name} : {user.email}{" "}
                         <button onClick={() => handleDeleteUser(user._id)}>
                             x
-                        </button>
+                        </button>{" "}
+                        <Link to={`users/${user._id}`}><button>Details</button></Link>
                     </p>
                 ))}
             </div>
