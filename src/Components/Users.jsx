@@ -71,7 +71,7 @@ const Users = () => {
             <form onSubmit={handleAddUser}>
                 <input type="text" name="name" />
                 <br />
-                <input type="text" name="email" />
+                <input type="email" name="email" />
                 <br />
                 <button type="submit">Add user</button>
             </form>
