@@ -1,6 +1,14 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 const Users = () => {
+    const [users, setUsers] = useState([]);
+
+    useEffect(() => {
+        fetch("http://localhost:3000/users")
+            .then((res) => res.json())
+            .then((data) => setUsers(data));
+    }, []);
+
     const handleAddUser = (e) => {
         e.preventDefault();
 
@@ -23,7 +31,13 @@ const Users = () => {
         })
             .then((res) => res.json())
             .then((data) => {
-                console.log(`Data after save ${data}`);
+                console.log(`Data after save: `, data);
+                if (data.insertedId) {
+                    e.target.reset();
+                    newUser._id = data.insertedId
+                    setUsers([...users, newUser])
+                    alert("User added successfully");
+                }
             });
     };
 
@@ -36,6 +50,14 @@ const Users = () => {
                 <br />
                 <button type="submit">Add user</button>
             </form>
+            <p>----------------------------------------------</p>
+            <div>
+                {users?.map((user) => (
+                    <p key={user._id}>
+                        {user.name} : {user.email}
+                    </p>
+                ))}
+            </div>
         </div>
     );
 };
